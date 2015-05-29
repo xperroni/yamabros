@@ -1,3 +1,0 @@
-<launch>
-  <node name="gazebo" pkg="gazebo_ros" type="gazebo" required="true" args="-file $(find yamabros)/worlds/kadai01_2015.world"/>
-</launch>
