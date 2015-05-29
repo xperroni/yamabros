@@ -40,12 +40,12 @@ Server::Server()
     topics_.reset(new TopicsYPSPUR());
     actions_.reset(new ActionsYPSPUR());
   }
-  else if (server_type == "ypspur_ros_navigaton")
+  else if (server_type == "ypspur_ros")
   {
     topics_.reset(new TopicsYPSPUR());
     actions_.reset(new ActionsROS());
   }
-  else if (server_type == "gazebo_ros_navigaton")
+  else if (server_type == "ros")
   {
     topics_.reset(new Topics()); // Dummy implementation.
     actions_.reset(new ActionsROS());
