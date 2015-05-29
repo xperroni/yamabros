@@ -149,17 +149,12 @@ add_executable(spur_server
   "src/spur/topics_ypspur.cpp"
 )
 
-add_executable(kadai01_2015
-  "src/kadai01_2015.cpp"
-)
-
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(yamabros_node yamabros_generate_messages_cpp)
 
 add_dependencies(spur_client ${yamabros_EXPORTED_TARGETS})
 add_dependencies(spur_server ${yamabros_EXPORTED_TARGETS})
-add_dependencies(kadai01_2015 spur_client ${yamabros_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(yamabros_node
@@ -173,11 +168,6 @@ target_link_libraries(spur_client
 target_link_libraries(spur_server
   ${catkin_LIBRARIES}
   ypspur
-)
-
-target_link_libraries(kadai01_2015
-  ${catkin_LIBRARIES}
-  spur_client
 )
 
 #############
