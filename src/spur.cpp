@@ -27,10 +27,10 @@ namespace spur
 
 Spur::Spur(bool blocking):
   node_(),
-  action_client_(node_.resolveName("spur"), true),
+  action_client_(new ActionClient(node_.resolveName("spur"), true)),
   blocking_(blocking)
 {
-  action_client_.waitForServer();
+  action_client_->waitForServer();
 
   std::string root = node_.resolveName("spur");
   std::string cmd_vel_topic = ros::names::append(root, node_.resolveName("cmd_vel"));
@@ -41,8 +41,8 @@ void Spur::send(Command command)
 {
   CommandGoal goal;
   goal.command = command;
-  action_client_.sendGoal(goal);
-  action_client_.waitForResult();
+  action_client_->sendGoal(goal);
+  action_client_->waitForResult();
 }
 
 void Spur::send(Command command, Mode mode, int size, ...)
@@ -56,9 +56,9 @@ void Spur::send(Command command, Mode mode, int size, ...)
   for (int i = 0; i < size; i++)
     destination.push_back(va_arg(args, double));
 
-  action_client_.sendGoal(goal);
+  action_client_->sendGoal(goal);
   if (mode == BLOCK || (mode == DEFAULT && blocking_))
-    action_client_.waitForResult();
+    action_client_->waitForResult();
 
   va_end(args);
 }
@@ -138,13 +138,13 @@ void Spur::turn(double t, double e, Mode mode)
 
 bool Spur::active()
 {
-  return (action_client_.getState() == actionlib::SimpleClientGoalState::ACTIVE);
+  return (action_client_->getState() == actionlib::SimpleClientGoalState::ACTIVE);
 }
 
 Pose Spur::pose()
 {
   send(POSE);
-  return action_client_.getResult()->pose;
+  return action_client_->getResult()->pose;
 }
 
 } // namespace spur
