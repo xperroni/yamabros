@@ -34,6 +34,8 @@ namespace spur
 
 class Spur
 {
+  typedef actionlib::SimpleActionClient<CommandAction> ActionClient;
+
   /** \brief Action invocation modes. */
   enum Mode
   {
@@ -58,7 +60,7 @@ class Spur
   ros::NodeHandle node_;
 
   /** \brief Spur command action client. */
-  actionlib::SimpleActionClient<CommandAction> action_client_;
+  boost::shared_ptr<ActionClient> action_client_;
 
   /** \brief Access to the robot's speed settings. */
   ros::Publisher cmd_vel_;
