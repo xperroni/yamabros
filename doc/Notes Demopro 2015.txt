@@ -24,7 +24,7 @@ Session 2:
 cd /media/sdcard/Projects/Lividum/
 source devel/setup.bash
 export ROS_MASTER_URI=http://ubilinux:11311
-* roslaunch yamabros yamabico.launch
+roslaunch yamabros yamabico.launch
 
 Session 3:
 
