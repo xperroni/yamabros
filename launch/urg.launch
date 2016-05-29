@@ -1,5 +1,5 @@
 <launch>
-  <param name="hokuyo_node/port" type="str" value="/dev/ttyACM0" />
+  <param name="hokuyo_node/port" type="str" value="/dev/ttyACM1" />
 
   <node name="urg" pkg="hokuyo_node" type="hokuyo_node" />
 

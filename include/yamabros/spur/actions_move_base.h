@@ -15,11 +15,13 @@ You should have received a copy of the GNU General Public License
 along with Yamabros. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef YAMABROS_SPUR_ACTIONS_ROS_H
-#define YAMABROS_SPUR_ACTIONS_ROS_H
+#ifndef YAMABROS_SPUR_ACTIONS_MOVE_BASE_H
+#define YAMABROS_SPUR_ACTIONS_MOVE_BASE_H
 
 #include <yamabros/spur/actions.h>
 
+#include <actionlib/client/simple_action_client.h>
+#include <move_base_msgs/MoveBaseAction.h>
 #include <nav_msgs/Odometry.h>
 
 namespace yamabros
@@ -28,10 +30,15 @@ namespace yamabros
 namespace spur
 {
 
-class ActionsROS: public Actions
+class ActionsMoveBase: public Actions
 {
+  /** \brief move_base action client type alias. */
+  typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
+
   /** \brief ROS node handler. */
   ros::NodeHandle node_;
+
+  MoveBaseClient action_client_;
 
   /** \brief Last recorded pose orientation (see implementation sources for details). */
   double tt1_;
@@ -45,13 +52,13 @@ class ActionsROS: public Actions
   /**
    * \brief Callback for odometry messages.
    */
-  void odom_callback(const nav_msgs::OdometryConstPtr& odometry);
+  void odom_callback(const nav_msgs::Odometry::ConstPtr& odometry);
 
 public:
   /**
    * \brief Default constructor.
    */
-  ActionsROS();
+  ActionsMoveBase();
 
   // See Actions::approach
   virtual void approach(double x, double y, double t);

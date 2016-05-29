@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -128,25 +128,27 @@ include_directories(
 # )
 
 add_library(spur_client
-  "src/spur.cpp"
-  "src/spur/constants.cpp"
+  "src/yamabros/settings.cpp"
+  "src/yamabros/spur.cpp"
+  "src/yamabros/spur/constants.cpp"
 )
 
 ## Declare a cpp executable
 # add_executable(yamabros_node src/yamabros_node.cpp)
 
 add_executable(spur_server
-  "src/settings.cpp"
-  "src/spur_server.cpp"
-  "src/spur/actions.cpp"
-  "src/spur/actions_ros.cpp"
-  "src/spur/actions_ypspur.cpp"
-  "src/spur/conditions.cpp"
-  "src/spur/constants.cpp"
-  "src/spur/coordinator.cpp"
-  "src/spur/server.cpp"
-  "src/spur/topics.cpp"
-  "src/spur/topics_ypspur.cpp"
+  "src/yamabros/settings.cpp"
+  "src/yamabros/spur_server.cpp"
+  "src/yamabros/spur/actions.cpp"
+  "src/yamabros/spur/actions_move_base.cpp"
+  "src/yamabros/spur/actions_ros.cpp"
+  "src/yamabros/spur/actions_ypspur.cpp"
+  "src/yamabros/spur/conditions.cpp"
+  "src/yamabros/spur/constants.cpp"
+  "src/yamabros/spur/coordinator.cpp"
+  "src/yamabros/spur/server.cpp"
+  "src/yamabros/spur/topics.cpp"
+  "src/yamabros/spur/topics_ypspur.cpp"
 )
 
 ## Add cmake target dependencies of the executable/library

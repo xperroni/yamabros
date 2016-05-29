@@ -1,3 +1,5 @@
 <launch>
+  <node pkg="tf" type="static_transform_publisher" name="laser_frame" args="0.0 0.0 0.0 0.0 0.0 0.0 odom laser 100" />
+
   <node name="view" pkg="rviz" type="rviz" args="--no-stereo -d $(find yamabros)/config/yamabico.rviz" required="true"/>
 </launch>

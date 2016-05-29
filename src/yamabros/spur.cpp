@@ -17,6 +17,8 @@ along with Yamabros. If not, see <http://www.gnu.org/licenses/>.
 
 #include <yamabros/spur.h>
 
+#include <yamabros/settings.h>
+
 #include <geometry_msgs/Twist.h>
 
 namespace yamabros
@@ -32,9 +34,11 @@ Spur::Spur(bool blocking):
 {
   action_client_->waitForServer();
 
-  std::string root = node_.resolveName("spur");
-  std::string cmd_vel_topic = ros::names::append(root, node_.resolveName("cmd_vel"));
-  cmd_vel_ = node_.advertise<geometry_msgs::Twist>(cmd_vel_topic, 100, true);
+//   std::string root = node_.resolveName("spur");
+//   std::string cmd_vel_topic = ros::names::append(root, node_.resolveName("cmd_vel"));
+//   cmd_vel_ = node_.advertise<geometry_msgs::Twist>(cmd_vel_topic, 100, true);
+
+  cmd_vel_ = node_.advertise<geometry_msgs::Twist>(settings::spur::cmd_vel(), 100, true);
 }
 
 void Spur::send(Command command)
