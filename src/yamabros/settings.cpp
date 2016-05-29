@@ -50,7 +50,7 @@ std::string odom()
 
 std::string device()
 {
-  return param<std::string>("~device", "/dev/ttyACM1");
+  return param<std::string>("~device", "/dev/ttyACM0");
 }
 
 std::string param_file()

@@ -19,6 +19,7 @@ along with Yamabros. If not, see <http://www.gnu.org/licenses/>.
 
 #include <yamabros/yamabros.h>
 #include <yamabros/settings.h>
+#include <yamabros/spur/actions_move_base.h>
 #include <yamabros/spur/actions_ros.h>
 #include <yamabros/spur/actions_ypspur.h>
 #include <yamabros/spur/topics_ypspur.h>
@@ -43,7 +44,12 @@ Server::Server()
   else if (server_type == "ypspur_ros")
   {
     topics_.reset(new TopicsYPSPUR());
-    actions_.reset(new ActionsROS());
+    actions_.reset(new ActionsMoveBase());
+  }
+  else if (server_type == "move_base")
+  {
+    topics_.reset(new Topics()); // Dummy implementation.
+    actions_.reset(new ActionsMoveBase());
   }
   else if (server_type == "ros")
   {

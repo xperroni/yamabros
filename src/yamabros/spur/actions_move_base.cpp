@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with Yamabros. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <yamabros/spur/actions_ros.h>
+#include <yamabros/spur/actions_move_base.h>
 
 #include <yamabros/settings.h>
 #include <yamabros/yamabros.h>
@@ -32,14 +32,14 @@ namespace yamabros
 namespace spur
 {
 
-ActionsROS::ActionsROS():
+ActionsMoveBase::ActionsMoveBase():
   Actions(),
   node_(),
   action_client_("move_base", true),
   tt1_(0.0)
 {
   cmd_vel_ = node_.advertise<geometry_msgs::Twist>(settings::spur::cmd_vel(), 1);
-  odom_ = node_.subscribe<nav_msgs::Odometry>(settings::spur::odom(), 1, &ActionsROS::odom_callback, this);
+  odom_ = node_.subscribe<nav_msgs::Odometry>(settings::spur::odom(), 1, &ActionsMoveBase::odom_callback, this);
 
   while(!action_client_.waitForServer(ros::Duration(5.0)))
     ROS_INFO_STREAM("Waiting for the move_base action server to come up...");
@@ -47,7 +47,7 @@ ActionsROS::ActionsROS():
   ROS_INFO_STREAM("Waiting for the move_base action server to come up... Done");
 }
 
-void ActionsROS::odom_callback(const nav_msgs::Odometry::ConstPtr& odometry)
+void ActionsMoveBase::odom_callback(const nav_msgs::Odometry::ConstPtr& odometry)
 {
   Pose &pose = this->pose();
   pose.x = odometry->pose.pose.position.x;
@@ -85,7 +85,7 @@ static void forward(Actions *actions,
     actions->set(v, 0);
 }
 
-void ActionsROS::approach(double x, double y, double t)
+void ActionsMoveBase::approach(double x, double y, double t)
 {
   move_base_msgs::MoveBaseGoal goal;
   goal.target_pose.header.frame_id = "base_link";
@@ -97,7 +97,7 @@ void ActionsROS::approach(double x, double y, double t)
   action_client_.sendGoal(goal, boost::bind(forward, this, _1, _2));
 }
 
-void ActionsROS::brake()
+void ActionsMoveBase::brake()
 {
   set(0, 0);
 }
@@ -110,7 +110,7 @@ static void encircle(Actions *actions, double v, double w,
     actions->set(v, w);
 }
 
-void ActionsROS::circle(double x, double y, double r)
+void ActionsMoveBase::circle(double x, double y, double r)
 {
   /*
   This implementation works by computing a point tangential to the desired
@@ -152,12 +152,12 @@ void ActionsROS::circle(double x, double y, double r)
   action_client_.sendGoal(goal, boost::bind(encircle, this, v, w, _1, _2));
 }
 
-void ActionsROS::coast()
+void ActionsMoveBase::coast()
 {
   set(0, 0);
 }
 
-void ActionsROS::set(double v, double w)
+void ActionsMoveBase::set(double v, double w)
 {
   if (!action_client_.getState().isDone())
     action_client_.cancelGoal();
@@ -173,14 +173,14 @@ void ActionsROS::set(double v, double w)
   cmd_vel_.publish(twist);
 }
 
-void ActionsROS::spin(double t)
+void ActionsMoveBase::spin(double t)
 {
   double w = copysign(1.0, t) * settings::spur::ang_vel();
 
   set(0, w);
 }
 
-void ActionsROS::straight()
+void ActionsMoveBase::straight()
 {
   double v = settings::spur::lin_vel();
 
