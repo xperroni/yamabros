@@ -1,4 +1,4 @@
-CV Video
+YamabROS
 ========
 
 YamabROS is a library for integrating the [YP-Spur](https://openspur.org/redmine/projects) control library (used mainly by [Yamabico](http://www.roboken.iit.tsukuba.ac.jp/en/theme/) robots) to ROS.
