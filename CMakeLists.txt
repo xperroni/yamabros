@@ -128,6 +128,7 @@ include_directories(
 # )
 
 add_library(spur_client
+  "src/yamabros/robot.cpp"
   "src/yamabros/settings.cpp"
   "src/yamabros/spur.cpp"
   "src/yamabros/spur/constants.cpp"
